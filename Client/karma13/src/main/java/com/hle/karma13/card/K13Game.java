@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class K13Game extends CardGame {
-    public static final boolean USE_JOKERS = false;
+    private static final boolean USE_JOKERS = false;
 
 
     public K13Game(K13Engine cardGameEngine, CardGameService cardGameService)
@@ -21,30 +21,21 @@ public class K13Game extends CardGame {
         this.cardGameService = cardGameService;
     }
 
-    public void deal() {
+    @Override
+    public void newGame() {
+        Deck deck = new Deck(this.USE_JOKERS);
         for (Player player: this.players) {
             List<Card> cards = new ArrayList<Card>();
             for (int i = 0; i < 13; i++) {
-                cards.add(this.deck.draw());
+                Card card = deck.draw();
+                if (card.denomination == 5 && card.suit == Card.Suit.SPADE) {
+                    this.activePlayer = player;
+                }
+
+                cards.add(card);
             }
 
             player.deal(cards);
         }
-    }
-
-    @Override
-    public void newGame() {
-        this.deck = new Deck(this.USE_JOKERS);
-        this.deal();
-    }
-
-    @Override
-    protected Player getNextPlayer() {
-        return null;
-    }
-
-    @Override
-    protected Player getPreviousPlayer() {
-        return null;
     }
 }

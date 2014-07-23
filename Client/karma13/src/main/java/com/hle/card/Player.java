@@ -32,7 +32,7 @@ public class Player {
             return true;
 
         Player otherPlayer = (Player) other;
-        return otherPlayer.playerId.equals(this.playerId) && otherPlayer.cards.equals(this.cards);
+        return otherPlayer.playerId.equals(this.playerId);
     }
 
     @Override

@@ -16,7 +16,6 @@ abstract public class CardGame {
     public List<Player> players; // Ordered
     public Player activePlayer;
     protected String gameId;
-    protected Deck deck;
     protected CardGameEngine cardGameEngine;
     protected CardGameService cardGameService;
 
@@ -56,9 +55,37 @@ abstract public class CardGame {
         this.activePlayer = this.getNextPlayer();
     }
 
-    abstract protected Player getNextPlayer();
+    protected Player getNextPlayer() {
+        for (int i = 0; i < this.players.size(); i++) {
+            Player player = this.players.get(i);
+            if (player.equals(activePlayer)) {
+                if (i == this.players.size() - 1) {
+                    return this.players.get(0);
+                } else {
+                    return this.players.get(i + 1);
+                }
+            }
+        }
 
-    abstract protected Player getPreviousPlayer();
+        return null;
+    }
+
+    protected Player getPreviousPlayer() {
+        for (int i = 0; i < this.players.size(); i++) {
+            Player player = this.players.get(i);
+            if (player.equals(activePlayer)) {
+                if (i == 0) {
+                    return this.players.get(this.players.size() - 1);
+                } else {
+                    return this.players.get(i - 1);
+                }
+            }
+        }
+
+        return null;
+    }
 
     abstract public void newGame();
+
+    // TODO: Generic undo method
 }

@@ -24,37 +24,37 @@ public class K13Play extends Play {
                 return false;
             }
 
-            if (i == 0) {
-                denomination = card.denomination;
-            } else if (card.denomination != denomination + 1) {
+                    if (i == 0) {
+                        denomination = card.denomination;
+                    } else if (card.denomination != denomination + 1) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+        public boolean isClear() {
+            if (this.isSameKind()) {
+                return this.getHighCard().denomination == 10;
+            }
+
+            if (this.isQuadruple() && (this.getHighCard().denomination == 2 || this.getHighCard().denomination == 3)) {
+                return true;
+            }
+
+            // If not 3 consecutive or 4 consecutive pair sizes, then cannot be a clear.
+            if (this.cards.size() != 6 || this.cards.size() != 8) {
                 return false;
             }
-        }
 
-        return true;
-    }
-
-    public boolean isClear() {
-        if (this.isSameKind()) {
-            return this.getHighCard().denomination == 10;
-        }
-
-        if (this.isQuadruple() && (this.getHighCard().denomination == 2 || this.getHighCard().denomination == 3)) {
-            return true;
-        }
-
-        // If not 3 consecutive or 4 consecutive pair sizes, then cannot be a clear.
-        if (this.cards.size() != 6 || this.cards.size() != 8) {
-            return false;
-        }
-
-        Integer currentDenomination = -1;
-        int consecutivePairCount = 0;
-        for (Card card : this.cards) {
-            if (currentDenomination == -1) {
-                currentDenomination = card.denomination;
-            } else {
-                if (card.denomination == currentDenomination) {
+            int currentDenomination = -1;
+            int consecutivePairCount = 0;
+            for (Card card : this.cards) {
+                if (currentDenomination == -1) {
+                    currentDenomination = card.denomination;
+                } else {
+                    if (card.denomination == currentDenomination) {
                     currentDenomination += 1;
                     consecutivePairCount += 1;
                 } else {
